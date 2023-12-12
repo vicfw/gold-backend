@@ -14,10 +14,6 @@ router
 
 router
   .route("/current")
-  .get(
-    authController.protect,
-    authController.restrictTo("admin"),
-    priceController.getCurrentPrice
-  );
+  .get(authController.protect, priceController.getCurrentPrice);
 
 module.exports = router;
