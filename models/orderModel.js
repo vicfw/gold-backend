@@ -8,8 +8,9 @@ const orderSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["confirmed", "rejected", "unknown"],
+    enum: ["confirmed", "rejected", "unknown", "pending"],
     required: true,
+    default: "pending",
   },
   amount: {
     type: Number,
@@ -21,6 +22,7 @@ const orderSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+    default: "نقدی 24",
   },
 });
 

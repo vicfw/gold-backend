@@ -11,6 +11,7 @@ const app = express();
 
 const userRouter = require("./routes/userRoutes");
 const priceRouter = require("./routes/priceRoutes");
+const orderRouter = require("./routes/orderRoutes");
 const AppError = require("./utils/appError");
 
 app.set("trust proxy", 1);
@@ -45,6 +46,7 @@ app.use(compression());
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/prices", priceRouter);
+app.use("/api/v1/orders", orderRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
