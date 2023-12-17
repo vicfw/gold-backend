@@ -8,6 +8,8 @@ const xss = require("xss-clean");
 const compression = require("compression");
 const cors = require("cors");
 const app = express();
+const catchAsync = require("./utils/catchAsync.js");
+const Order = require("./models/orderModel");
 
 const userRouter = require("./routes/userRoutes");
 const priceRouter = require("./routes/priceRoutes");
@@ -44,9 +46,29 @@ app.use(compression());
 
 // Routes
 
+const socketIO = require("./server.js");
+
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/prices", priceRouter);
 app.use("/api/v1/orders", orderRouter);
+
+app.post(
+  "/api/v1/orders",
+  catchAsync(async (req, res, next) => {
+    const order = await Order.create(req.body);
+
+    setTimeout(() => {
+      socketIO.updateOrderStatus(order._id);
+    }, 30000);
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        order,
+      },
+    });
+  })
+);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
