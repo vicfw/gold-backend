@@ -21,7 +21,7 @@ const createSendToken = (user, statusCode, req, res) => {
     sameSite: "lax",
     maxAge: farFuture,
     secure: true,
-    domain: "amir-gold.runflare.run",
+    // domain: ".amir-gold.runflare.run",
   });
 
   // Remove password from output
@@ -83,8 +83,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   } else if (req.headers.cookie) {
     token = req.headers.cookie;
   }
-
-  console.log(token, "token");
 
   if (!token) {
     return next(
