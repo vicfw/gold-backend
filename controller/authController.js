@@ -23,9 +23,7 @@ const createSendToken = (user, statusCode, req, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     secure: true,
-    domain: req.headers.origin.includes("localhost")
-      ? undefined
-      : ".frontend.runflare.run",
+    domain: ".frontend.runflare.run",
   });
 
   // Remove password from output
