@@ -14,14 +14,14 @@ const signToken = (id) => {
 
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
-  const farFuture = new Date(
-    new Date().getTime() + 1000 * 60 * 60 * 24 * 365 * 10
-  );
+  const farFuture = 1000 * 60 * 60 * 24 * 365 * 10;
   res.cookie("jwt", token, {
     path: "/",
     httpOnly: true,
     sameSite: "lax",
-    expires: farFuture,
+    maxAge: farFuture,
+    secure: true,
+    domain: "amir-gold.runflare.run",
   });
 
   // Remove password from output
