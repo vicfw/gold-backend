@@ -14,14 +14,11 @@ const signToken = (id) => {
 
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
-  const farFuture = 1000 * 60 * 60 * 24 * 365 * 10;
   res.cookie("jwt", token, {
     path: "/",
     httpOnly: true,
     sameSite: "lax",
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 10),
     secure: process.env.NODE_ENV === "production",
     domain: process.env.NODE_ENV === "production" ? ".runflare.run" : undefined,
   });
