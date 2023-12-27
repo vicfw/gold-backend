@@ -68,6 +68,7 @@ exports.logout = (req, res) => {
   //   httpOnly: true,
   // });
   res.clearCookie("jwt");
+  delete req.user;
   res.status(200).json({ status: "success" });
 };
 
