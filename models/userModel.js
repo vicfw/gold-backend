@@ -91,6 +91,12 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
+userSchema.pre("remove", async function (next) {
+  // Assuming 'Order' is the model for orders
+  await Order.updateMany({ user: this._id }, { $set: { user: null } });
+  next();
+});
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

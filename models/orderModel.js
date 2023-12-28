@@ -7,6 +7,11 @@ const orderSchema = new mongoose.Schema(
       enum: ["sell", "buy"],
       required: [true, "نوع سفارش را وارد کنید"],
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     status: {
       type: String,
       enum: ["confirmed", "rejected", "unknown", "pending"],
