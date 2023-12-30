@@ -38,7 +38,9 @@ exports.getAllOrders = catchAsync(async (req, res, next) => {
     }
   }
   // Query orders based on the constructed query
-  const orders = await Order.find(query).populate("user");
+  const orders = await Order.find(query)
+    .sort({ createdAt: -1 })
+    .populate("user");
 
   res.status(200).json({
     status: "success",
