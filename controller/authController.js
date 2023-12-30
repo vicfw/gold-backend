@@ -63,12 +63,15 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.logout = (req, res) => {
-  // res.cookie("jwt", "loggedout", {
-  //   expires: new Date(Date.now() + 10 * 1000),
-  //   httpOnly: true,
-  // });
-  res.clearCookie("jwt");
-  delete req.user;
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    domain: process.env.NODE_ENV === "production" ? ".runflare.run" : undefined,
+  });
+
   res.status(200).json({ status: "success" });
 };
 
